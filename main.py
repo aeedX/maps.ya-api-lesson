@@ -12,6 +12,7 @@ from urllib3 import Retry
 import ui
 
 
+server = 'https://static-maps.yandex.ru/v1?'
 static_api = '06100bea-8536-4d5d-916b-a346bb43969e'
 
 class MainWindow(QMainWindow):
@@ -24,17 +25,26 @@ class MainWindow(QMainWindow):
         self.session.mount('https://', adapter)
 
         self.spn = 0.002
+        self.center_pos = [37.530887, 55.703118]
 
         f = io.StringIO(ui.MainWindow)
         uic.loadUi(f, self)
-        self.findButton.clicked.connect(self.search)
+        self.findButton.clicked.connect(self.update_map)
+        self.temaBox.checkStateChanged.connect(self.update_map)
 
     def search(self):
-        ll = self.findEdit.text()
-        if not ll:
+        self.center_pos = self.findEdit.text().split(',')
+
+    def update_map(self):
+        ll = f'{self.center_pos[0]},{self.center_pos[1]}'
+
+        if ll == ',':
             return
         spn = f'{self.spn},{self.spn}'
-        map_request = f'https://static-maps.yandex.ru/v1?apikey={static_api}&ll={ll}&spn={spn}'
+        theme = 'light'
+        if self.temaBox.isChecked():
+            theme = 'dark'
+        map_request = f'{server}apikey={static_api}&ll={ll}&spn={spn}&theme={theme}'
         response = self.session.get(map_request)
 
         if not response:
@@ -50,12 +60,25 @@ class MainWindow(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key.Key_PageUp and self.spn < 0.1:
             self.spn += 0.001
-            self.search()
+            self.update_map()
             print(self.spn)
         elif event.key() == QtCore.Qt.Key.Key_PageDown and self.spn > 0:
             self.spn -= 0.001
-            self.search()
+            self.update_map()
             print(self.spn)
+        elif event.key() == QtCore.Qt.Key.Key_A:
+            self.center_pos[0] -= 0.0005
+            self.update_map()
+        elif event.key() == QtCore.Qt.Key.Key_D:
+            self.center_pos[0] += 0.0005
+            self.update_map()
+        elif event.key() == QtCore.Qt.Key.Key_W:
+            self.center_pos[1] += 0.0005
+            self.update_map()
+        elif event.key() == QtCore.Qt.Key.Key_S:
+            self.center_pos[1] -= 0.0005
+            self.update_map()
+
         event.accept()
 
 
