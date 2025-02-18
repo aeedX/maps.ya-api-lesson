@@ -1,5 +1,4 @@
-MainWindow = """
-<?xml version="1.0" encoding="UTF-8"?>
+MainWindow = """<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -148,5 +147,4 @@ MainWindow = """
  </widget>
  <resources/>
  <connections/>
-</ui>
-"""
+</ui>"""
