@@ -1,4 +1,5 @@
-MainWindow = """<?xml version="1.0" encoding="UTF-8"?>
+MainWindow = """
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -81,14 +82,14 @@ MainWindow = """<?xml version="1.0" encoding="UTF-8"?>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>250</y>
+      <y>260</y>
       <width>160</width>
-      <height>101</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QTextEdit" name="findTextEdit"/>
+      <widget class="QLineEdit" name="findEdit"/>
      </item>
      <item>
       <widget class="QPushButton" name="findButton">
@@ -147,4 +148,5 @@ MainWindow = """<?xml version="1.0" encoding="UTF-8"?>
  </widget>
  <resources/>
  <connections/>
-</ui>"""
+</ui>
+"""
